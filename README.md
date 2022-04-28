@@ -1,6 +1,6 @@
 # Compilation sujet TP1
 
-##Exercice 1 :
+#Exercice 1 :
 
 Reprendre l'exercice donné dans le diaporama Lex (histogramme des mots et l'exécuter).
 Que : le texte analysé est saisi au clavier
@@ -10,7 +10,7 @@ Dans main :
 	File $ f = fopen("fichier.txt", "r") ;
 	yin = f ;
 
-##Exercice 2 :
+#Exercice 2 :
 
 Propgramme Lex affichant la nature (verbe ou non verbe) des mots dans des phrases saisies.
 Exemple d'exécution :
@@ -23,7 +23,7 @@ Vite non verbe
 Rque : les mots sont stockés en "dur" dans le programme Lex
 
 
-##Exercice 3 :
+#Exercice 3 :
 
 Programme qui détermine la nature des mots dans des phrases saisies, en utilisant 2 étapes :
 apprentissage et reconnaissance sujet, verbe, adjectif, ... en utilisant une liste chainée
