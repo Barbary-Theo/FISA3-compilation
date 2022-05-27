@@ -1,25 +1,54 @@
 %{
 #include <stdio.h>
+#include <math.h>
 #include "y.tab.h"
 int yylex();
 int yyparse(); 
 int yyerror(); 
+
+char t[26];
+
 %}
 
-%start text
-%token SUJET
-%token VERBE
-%token ADJ
-%token ADV
-%token ERR
+%start c
+%union {int dval; int ival; char cval;}
+%token <dval> NOMBRE
+%token <cval> VARIABLE
+%token FIN
+%type <dval> calcul expression terme affectation variable
+
 
 %%
-text	: phrase | text phrase
-phrase	: SUJET VERBE complement		{printf("Correct sentence ! \n");};
-complement : ADJ
-	   | ADV 
-	   ;
+c : 		calcul FIN
+	  |	calcul FIN c
+	  ;
+
+calcul:  	expression	  {printf("%d\n\n",$1);}
+  	  ;
+
+
+expression : 	terme '+' terme {$$ = $1 + $3;}
+	  |	terme '/' terme {$$ = $1 / $3;}
+	  |	terme '-' terme {$$ = $1 - $3;}
+	  |	terme '*' terme {$$ = $1 * $3;}
+	  |	terme '%' terme {$$ = $1 % $3;}
+	  |	terme '^' terme {$$ = pow($1,$3);}
+	  |	terme 		{$$ = $1;}
+	  |	affectation
+	  ;
+
+affectation: 	variable '=' terme {t[$1]= $3;}
+
+variable: 	VARIABLE 	   {$$ = t[$1];}
+	  ;
+
+terme :		NOMBRE		   {$$ = $1;}
+	  |	variable	   {$$ = $1;}
+	  ; 
+
 %%
+
+
 
 #include "lex.yy.c"
 
