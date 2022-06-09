@@ -41,13 +41,17 @@
    enum yytokentype {
      NOMBRE = 258,
      VARIABLE = 259,
-     FIN = 260
+     FIN = 260,
+     IF = 261,
+     WHILE = 262
    };
 #endif
 /* Tokens.  */
 #define NOMBRE 258
 #define VARIABLE 259
 #define FIN 260
+#define IF 261
+#define WHILE 262
 
 
 
@@ -57,7 +61,7 @@ typedef union YYSTYPE
 #line 14 "tp3.y"
 {int dval; int ival; char cval;}
 /* Line 1529 of yacc.c.  */
-#line 61 "y.tab.h"
+#line 65 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
