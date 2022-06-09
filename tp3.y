@@ -16,6 +16,9 @@ char t[26];
 %token <cval> VARIABLE
 %token FIN
 %type <dval> calcul expression terme affectation variable
+%left '+' '-'
+%left '/' '*' '%'
+%right '^'
 
 
 %%
@@ -23,21 +26,22 @@ c : 		calcul FIN
 	  |	calcul FIN c
 	  ;
 
-calcul:  	expression	  {printf("%d\n\n",$1);}
+calcul:  	expression	  {printf("Résultat : %d \n\n",$1);}
+	  |	affectation	  {printf("\n");}
   	  ;
 
 
-expression : 	terme '+' terme {$$ = $1 + $3;}
-	  |	terme '/' terme {$$ = $1 / $3;}
-	  |	terme '-' terme {$$ = $1 - $3;}
-	  |	terme '*' terme {$$ = $1 * $3;}
-	  |	terme '%' terme {$$ = $1 % $3;}
-	  |	terme '^' terme {$$ = pow($1,$3);}
-	  |	terme 		{$$ = $1;}
-	  |	affectation
+expression : 	expression '+' expression {$$ = $1 + $3;}
+	  |	expression '/' expression {$$ = $1 / $3;}
+	  |	expression '-' expression {$$ = $1 - $3;}
+	  |	expression '*' expression {$$ = $1 * $3;}
+	  |	expression '%' expression {$$ = $1 % $3;}
+	  |	expression '^' expression {$$ = pow($1,$3);}
+	  |	terme 			  {$$ = $1;}
+	  |	'-' terme		  {$$ = - $2;}
 	  ;
 
-affectation: 	variable '=' terme {t[$1]= $3;}
+affectation: 	variable '=' expression {t[$1]= $3;}
 
 variable: 	VARIABLE 	   {$$ = t[$1];}
 	  ;
@@ -56,6 +60,6 @@ int yyerror(char *s)
 {printf("%s\n",s);return 0;}
 
 int main() {
-	printf("main de yacc test \n \n");
+	printf("\n ~~~~~~~ Calculatrice prête ~~~~~~~\n \n");
 	yyparse();
 }
