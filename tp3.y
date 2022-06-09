@@ -10,24 +10,25 @@ char t[26];
 
 %}
 
-%start c
+%start ligne
 %union {int dval; int ival; char cval;}
 %token <dval> NOMBRE
 %token <cval> VARIABLE
 %token FIN
-%type <dval> calcul expression terme affectation variable
+%type <dval> calcul expression terme affectation
 %left '+' '-'
 %left '/' '*' '%'
 %right '^'
+%left '(' ')'
 
 
 %%
-c : 		calcul FIN
-	  |	calcul FIN c
+ligne : 	calcul FIN
+	  |	calcul FIN ligne
 	  ;
 
 calcul:  	expression	  {printf("Résultat : %d \n\n",$1);}
-	  |	affectation	  {printf("\n");}
+	  |	affectation	  {printf("\n %s \n", t);}
   	  ;
 
 
@@ -37,17 +38,16 @@ expression : 	expression '+' expression {$$ = $1 + $3;}
 	  |	expression '*' expression {$$ = $1 * $3;}
 	  |	expression '%' expression {$$ = $1 % $3;}
 	  |	expression '^' expression {$$ = pow($1,$3);}
+	  |	'(' expression ')'	  {$$ = $2;}
 	  |	terme 			  {$$ = $1;}
 	  |	'-' terme		  {$$ = - $2;}
 	  ;
 
-affectation: 	variable '=' expression {t[$1]= $3;}
+affectation: 	VARIABLE '=' expression {t[$1] = $3;}
 
-variable: 	VARIABLE 	   {$$ = t[$1];}
-	  ;
 
 terme :		NOMBRE		   {$$ = $1;}
-	  |	variable	   {$$ = $1;}
+	  |	VARIABLE	   {$$ = t[$1];}
 	  ; 
 
 %%

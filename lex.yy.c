@@ -728,12 +728,12 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 YY_RULE_SETUP
 #line 12 "tp3.l"
-{yylval.dval=atof(yytext);return NOMBRE;}
+{yylval.dval = atof(yytext); return NOMBRE;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
 #line 13 "tp3.l"
-{yylval.ival = yytext[0] - 'a'; return VARIABLE;}
+{yylval.ival = yytext[0] - 'a'; printf("oui -> %d", yylval.ival); return VARIABLE;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP

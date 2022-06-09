@@ -9,7 +9,7 @@
 
 
 %%
-[0-9]+|[0-9]*\.[0-9]+ {yylval.dval=atof(yytext);return NOMBRE;}
+[0-9]+|[0-9]*\.[0-9]+ {yylval.dval = atof(yytext); return NOMBRE;}
 [a-z] {yylval.ival = yytext[0] - 'a'; return VARIABLE;}
 [ \t] ;
 \n    {return FIN;};
